@@ -34,7 +34,22 @@ We explore the following machine learning algorithms for sleep stage classificat
 
 
 ## Results
-After conducting the experimental study, the performance of each technique is evaluated. The Multilayer Perceptron Classifier (MLP) emerges as the top performer, achieving an accuracy of 93.11%.
+Test accuracy of the five classifiers in the saved notebook runs (`model_eeg.ipynb`), each on a random 80/20 split of the same feature file. The notebook ran everything twice: once with the original R&K labels and once with stage 3 merged into stage 4 (AASM style).
+
+| Classifier | R&K labels | AASM style (3 merged into 4) |
+|---|---|---|
+| Multilayer Perceptron (MLP) | 92.80% | 93.64% |
+| Multinomial Logistic Regression | 91.52% | 91.03% |
+| Random Forest | 90.02% | 90.33% |
+| Decision Tree | 87.72% | 87.81% |
+| K-Nearest Neighbors (k = 7) | 85.16% | 85.29% |
+
+The Multilayer Perceptron (MLP) is the top performer in both runs. An earlier version of this README quoted 93.11% for it. That exact number is not in the saved notebook outputs, which show 92.80% and 93.64%, and the split is random and not seeded, so scores move a little from run to run.
+
+**Limits**
+- The split is random over 30-second chunks, not by person or night, so chunks from the same recording land in both the training and test sets. Scores on recordings the model has never seen are likely lower.
+- The label set in the second run has seven values (0, 1, 2, 4, 5, 6, 9), so it is a seven-class problem, not a five-stage one.
+- Each number comes from a single run, without cross-validation or a fixed random seed.
 
 ![image](https://github.com/ghodkeadityarao/Sleep-Stage-Classification-of-EEG-Signals/assets/99025242/a7710523-31df-45a2-8967-4b1605d4d99b)
 
